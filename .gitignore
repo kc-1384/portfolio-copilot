@@ -1,0 +1,62 @@
+
+# .gitignore for AI Portfolio Co-Pilot
+# Anything matching these patterns is NEVER saved to Git.
+
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+#Python 
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+#Python tool caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+#Node / Next.js / Expo 
+node_modules/
+.next/
+out/
+.expo/
+npm-debug.log*
+*.tsbuildinfo
+.vercel/
+
+# ML: data, models 
+data/
+ml/data/
+mlruns/
+mlartifacts/
+*.parquet
+*.joblib
+*.pkl
+*.onnx
+.ipynb_checkpoints/
+
+
+uploads/
+
+#  Logs
+*.log
+logs/
+
+#Editors and operating systems
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store

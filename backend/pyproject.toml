@@ -1,0 +1,28 @@
+[project]
+name = "copilot-backend"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.162.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.3",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "DTZ", "S"]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests use plain `assert` on purpose; the security rule S101 would flag it.
+"tests/**" = ["S101"]

@@ -1,0 +1,41 @@
+# Docker Compose: local development services for AI Portfolio Co-Pilot.
+# Start:  docker compose -f infra/docker-compose.yml up -d   (run from the copilot folder)
+# Stop:   docker compose -f infra/docker-compose.yml down    (data in volumes is kept)
+
+name: copilot
+
+services:
+  db:
+    image: timescale/timescaledb:latest-pg16
+    container_name: copilot-db
+    env_file: ../.env            # POSTGRES_USER / POSTGRES_PASSWORD / POSTGRES_DB
+    ports:
+      - "127.0.0.1:5432:5432"    # only reachable from this computer
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      # $$ passes a literal $ to the container, so the container's own variables are used
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: copilot-redis
+    command: ["redis-server", "--appendonly", "yes"]   # save data to disk too
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:
