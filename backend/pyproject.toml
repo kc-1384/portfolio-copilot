@@ -3,7 +3,12 @@ name = "copilot-backend"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "alembic>=1.20.1",
     "fastapi[standard]>=0.162.0",
+    "psycopg[binary]>=3.3.8",
+    "pydantic-settings>=2.16.2",
+    "scipy>=1.18.1",
+    "sqlalchemy>=2.1.8",
 ]
 
 [dependency-groups]
@@ -25,4 +30,4 @@ select = ["E", "W", "F", "I", "B", "UP", "DTZ", "S"]
 
 [tool.ruff.lint.per-file-ignores]
 # Tests use plain `assert` on purpose; the security rule S101 would flag it.
-"tests/**" = ["S101"]
+"tests/**" = ["S101", "S105", "S106", "S107"]
